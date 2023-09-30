@@ -12,6 +12,7 @@ from ppo.ppo_datahelper import get_tokenizer
 from utils import *
 from transformers.models.llama.modeling_llama import LlamaForCausalLM
 
+
 class Llama(LlamaForCausalLM):
     def __init__(self, config, opt, tokenizer):
         super().__init__(config)
@@ -65,7 +66,8 @@ class Llama(LlamaForCausalLM):
             if done.all():
                 break
             score, incr_state, *_ = self.forward(decoder_input, incr_state)
-            score = score.half()
+            if kwargs.get('to_half', False):
+                score = score.half()
 
             # now score is bs, len, vocab_size
             score = score[:, -1, :]

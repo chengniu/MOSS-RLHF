@@ -337,10 +337,10 @@ class PPOSFTDataset(IterDataset):
     def batchify(self, batch_samples: List[Dict[str, Any]]) -> Dict[str, Any]:
         batch = dict()
         batch_text_vec = torch.tensor(pad_sequences(
-            [sample['text_vec'] for sample in batch_samples], pad_value=self.tokenizer.pad_token_id, pad_left=False
+            [sample['text_vec'] for sample in batch_samples], pad_value=self.tokenizer.pad_token_id, padding='right'
             ), dtype=torch.long)
         loss_mask = torch.tensor(pad_sequences(
-            [sample['loss_mask'] for sample in batch_samples], pad_value=0, pad_left=False
+            [sample['loss_mask'] for sample in batch_samples], pad_value=0, padding='right'
             ), dtype=torch.bool)
    
         batch.update({

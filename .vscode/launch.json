@@ -1,0 +1,61 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "model test",
+            "type": "python",
+            "request": "launch",
+            "program": "test/model_test.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "$PYTHONPATH:/home/paperspace/cn/MOSS-RLHF",
+                "CUDA_VISIBLE_DEVICES": "0,1"
+            },
+            "args": [
+                "--tokenizer_name_or_path",
+                "/home/paperspace/juntong/MOSS-RLHF/models/moss-rlhf-reward-model-7B-en",
+                "--policy_model_path",
+                "/home/paperspace/juntong/MOSS-RLHF/models/moss-rlhf-sft-model-7B-en/recover",
+                "--critic_model_path",
+                "/home/paperspace/juntong/MOSS-RLHF/models/moss-rlhf-reward-model-7B-en/recover",
+                "--data_path",
+                "data/ppo_data",
+                "--ppo_pretrain_data_path",
+                "data/ppo_data",
+                "--ppo_pretrain_batch_size_ratio",
+                "4",
+                "--rollout_batch_size",
+                "4",
+                "--batch_size",
+                "4"
+            ]
+        },
+        {
+            "name": "data test",
+            "type": "python",
+            "request": "launch",
+            "program": "test/data_test.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "$PYTHONPATH:/home/paperspace/cn/MOSS-RLHF"
+            },
+            "args": [
+                "--tokenizer_name_or_path",
+                "/home/paperspace/juntong/MOSS-RLHF/models/moss-rlhf-reward-model-7B-en",
+                "--data_path",
+                "data/ppo_data",
+                "--ppo_pretrain_data_path",
+                "data/ppo_data",
+                "--ppo_pretrain_batch_size_ratio",
+                "4",
+                "--rollout_batch_size",
+                "4"
+            ]
+        }
+    ]
+}
