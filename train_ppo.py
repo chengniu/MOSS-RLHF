@@ -164,21 +164,21 @@ def main(opt):
 
     # load policy model
     logging.info(f"Loading policy model from: {opt.policy_model_path}...")
-    policy_model = Llama.from_pretrained(opt.policy_model_path, opt, tokenizer)
+    policy_model = Llama.from_pretrained(opt.policy_model_path, opt, tokenizer, torch_dtype = torch.bfloat16)
     policy_model._set_gradient_checkpointing(policy_model.model, opt.gradient_checkpoint)
 
     # load critic model
     logging.info(f"Loading critic model from: {opt.critic_model_path}...")
-    critic_model = LlamaRewardModel.from_pretrained(opt.critic_model_path, opt, tokenizer)
+    critic_model = LlamaRewardModel.from_pretrained(opt.critic_model_path, opt, tokenizer, torch_dtype = torch.bfloat16)
     critic_model._set_gradient_checkpointing(critic_model.model, opt.gradient_checkpoint)
 
     # load reference model
     logging.info(f"Loading reference model from: {opt.policy_model_path}...")
-    ref_model = Llama.from_pretrained(opt.policy_model_path, opt, tokenizer)
+    ref_model = Llama.from_pretrained(opt.policy_model_path, opt, tokenizer, torch_dtype = torch.bfloat16)
 
     # load reward model
     logging.info(f"Loading reward model from: {opt.critic_model_path}...")
-    reward_model = LlamaRewardModel.from_pretrained(opt.critic_model_path, opt, tokenizer)
+    reward_model = LlamaRewardModel.from_pretrained(opt.critic_model_path, opt, tokenizer, torch_dtype = torch.bfloat16)
 
     synchronize_if_distributed()
     trainer = PPOTrainer(opt, policy_model, ref_model, critic_model, reward_model, accelerator)
